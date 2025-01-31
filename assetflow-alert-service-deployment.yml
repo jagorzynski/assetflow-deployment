@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-alert-service
+  labels:
+    app: assetflow-alert-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-alert-service
+  template:
+    metadata:
+      labels:
+        app: assetflow-alert-service
+    spec:
+      containers:
+        - name: alert-service
+          image: ghcr.io/jagorzynski/assetflow-alert-service:latest
+          ports:
+            - containerPort: 8085
+          envFrom:
+            - configMapRef:
+                name: assetflow-alert-service-config
+            - secretRef:
+                name: assetflow-alert-service-secret

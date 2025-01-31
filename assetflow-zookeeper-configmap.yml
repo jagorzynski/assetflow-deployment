@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-zookeeper-config
+  labels:
+    app: assetflow-zookeeper
+data:
+  ZOOKEEPER_CLIENT_PORT: "2181"

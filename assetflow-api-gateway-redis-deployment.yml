@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-api-gateway-redis
+  labels:
+    app: assetflow-api-gateway-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-api-gateway-redis
+  template:
+    metadata:
+      labels:
+        app: assetflow-api-gateway-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+          envFrom:
+            - configMapRef:
+                name: assetflow-api-gateway-redis-config
+          volumeMounts:
+            - name: redis-storage
+              mountPath: /data
+      volumes:
+        - name: redis-storage
+          emptyDir: {}

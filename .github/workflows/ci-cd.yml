@@ -1,0 +1,56 @@
+name: Validate Kubernetes Manifests
+
+on:
+  push:
+    paths:
+      - '**.yml'
+      - '**.yaml'
+  pull_request:
+    paths:
+      - '**.yml'
+      - '**.yaml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Kustomize
+        run: |
+          curl -sLo kustomize.tar.gz "https://github.com/kubernetes-sigs/kustomize/releases/latest/download/kustomize_linux_amd64.tar.gz"
+          tar -xzf kustomize.tar.gz
+          chmod +x kustomize
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Validate Kustomization Build
+        run: |
+          kustomize build . | tee generated.yaml
+
+      - name: Install kubeval
+        run: |
+          curl -sLo kubeval.tar.gz "https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz"
+          tar -xzf kubeval.tar.gz
+          chmod +x kubeval
+          sudo mv kubeval /usr/local/bin/
+
+      - name: Validate Kubernetes Manifests
+        run: |
+          kubeval generated.yaml --strict
+
+      - name: Install kube-linter
+        run: |
+          curl -sLo kube-linter.tar.gz "https://github.com/stackrox/kube-linter/releases/latest/download/kube-linter-linux.tar.gz"
+          tar -xzf kube-linter.tar.gz
+          chmod +x kube-linter
+          sudo mv kube-linter /usr/local/bin/
+
+      - name: Lint Kubernetes Manifests
+        run: |
+          kube-linter lint .
+
+      - name: Dry Run Kubernetes Manifests
+        run: |
+          kubectl apply --dry-run=client -f generated.yaml

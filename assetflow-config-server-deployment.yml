@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-config-server
+  labels:
+    app: assetflow-config-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-config-server
+  template:
+    metadata:
+      labels:
+        app: assetflow-config-server
+    spec:
+      containers:
+        - name: config-server
+          image: ghcr.io/jagorzynski/assetflow-config-server:latest
+          ports:
+            - containerPort: 8888
+          envFrom:
+            - configMapRef:
+                name: assetflow-config-server-config
+            - secretRef:
+                name: assetflow-config-server-secret

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-alert-mongo
+  labels:
+    app: assetflow-alert-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-alert-mongo
+  template:
+    metadata:
+      labels:
+        app: assetflow-alert-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: assetflow-alert-mongo-config
+            - secretRef:
+                name: assetflow-alert-mongo-secret
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+            - name: mongo-init-script
+              mountPath: /docker-entrypoint-initdb.d/
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: assetflow-alert-mongo-pvc
+        - name: mongo-init-script
+          configMap:
+            name: assetflow-alert-mongo-initdb-config

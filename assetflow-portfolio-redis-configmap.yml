@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-portfolio-redis-config
+data:
+  REDIS_HOST: "assetflow-portfolio-redis"
+  REDIS_PORT: "6379"

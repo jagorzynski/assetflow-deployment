@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-trade-service
+  labels:
+    app: assetflow-trade-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-trade-service
+  template:
+    metadata:
+      labels:
+        app: assetflow-trade-service
+    spec:
+      containers:
+        - name: trade-service
+          image: ghcr.io/jagorzynski/assetflow-trade-service:latest
+          ports:
+            - containerPort: 8084
+          envFrom:
+            - configMapRef:
+                name: assetflow-trade-service-config
+            - secretRef:
+                name: assetflow-trade-service-secret

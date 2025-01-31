@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-user-service-db
+  labels:
+    app: assetflow-user-service-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-user-service-db
+  template:
+    metadata:
+      labels:
+        app: assetflow-user-service-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: assetflow-user-service-db-config
+            - secretRef:
+                name: assetflow-user-service-db-secret
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: assetflow-user-service-db-pvc

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-portfolio-service
+  labels:
+    app: assetflow-portfolio-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-portfolio-service
+  template:
+    metadata:
+      labels:
+        app: assetflow-portfolio-service
+    spec:
+      containers:
+        - name: portfolio-service
+          image: ghcr.io/jagorzynski/assetflow-portfolio-service:latest
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: assetflow-portfolio-service-config
+            - secretRef:
+                name: assetflow-portfolio-service-secret

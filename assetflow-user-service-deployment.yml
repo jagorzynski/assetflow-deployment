@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-user-service
+  labels:
+    app: assetflow-user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-user-service
+  template:
+    metadata:
+      labels:
+        app: assetflow-user-service
+    spec:
+      containers:
+        - name: user-service
+          image: ghcr.io/jagorzynski/assetflow-user-service:latest
+          ports:
+            - containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: assetflow-user-service-config
+            - secretRef:
+                name: assetflow-user-service-secret

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-market-data-service
+  labels:
+    app: assetflow-market-data-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-market-data-service
+  template:
+    metadata:
+      labels:
+        app: assetflow-market-data-service
+    spec:
+      containers:
+        - name: market-data-service
+          image: ghcr.io/jagorzynski/assetflow-market-data-service:latest
+          ports:
+            - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: assetflow-market-data-service-config

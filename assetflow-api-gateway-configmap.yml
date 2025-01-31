@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-api-gateway-config
+  labels:
+    app: assetflow-api-gateway
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  SERVER_PORT: "8086"
+  SPRING_CLOUD_CONFIG_URI: "http://assetflow-config-server:8888"
+  ASSETFLOW_USER_SERVICE_URL: "http://assetflow-user-service:8081"
+  ASSETFLOW_PORTFOLIO_SERVICE_URL: "http://assetflow-portfolio-service:8082"
+  ASSETFLOW_TRADE_SERVICE_URL: "http://assetflow-trade-service:8084"
+  ASSETFLOW_API_GATEWAY_REDIS_HOST: "assetflow-api-gateway-redis"
+  ASSETFLOW_API_GATEWAY_REDIS_PORT: "6379"

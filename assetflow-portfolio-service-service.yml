@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: assetflow-portfolio-service
+  labels:
+    app: assetflow-portfolio-service
+spec:
+  selector:
+    app: assetflow-portfolio-service
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+      nodePort: 30082

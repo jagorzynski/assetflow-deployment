@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-kafka-config
+  labels:
+    app: assetflow-kafka
+data:
+  KAFKA_BROKER_ID: "1"
+  KAFKA_ZOOKEEPER_CONNECT: "assetflow-zookeeper:2181"
+  KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://assetflow-kafka:9093,PLAINTEXT_HOST://assetflow-kafka:9092"
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+  KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"

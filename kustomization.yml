@@ -1,0 +1,86 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # Databases (Deploy First)
+  - assetflow-user-service-db-pvc.yml
+  - assetflow-user-service-db-configmap.yml
+  - assetflow-user-service-db-secret.yml
+  - assetflow-user-service-db-deployment.yml
+  - assetflow-user-service-db-service.yml
+
+  - assetflow-portfolio-mongo-pvc.yml
+  - assetflow-portfolio-mongo-configmap.yml
+  - assetflow-portfolio-mongo-secret.yml
+  - assetflow-portfolio-mongo-initdb-configmap.yml
+  - assetflow-portfolio-mongo-deployment.yml
+  - assetflow-portfolio-mongo-service.yml
+
+  - assetflow-trade-mongo-pvc.yml
+  - assetflow-trade-mongo-configmap.yml
+  - assetflow-trade-mongo-secret.yml
+  - assetflow-trade-mongo-initdb-configmap.yml
+  - assetflow-trade-mongo-deployment.yml
+  - assetflow-trade-mongo-service.yml
+
+  - assetflow-alert-mongo-pvc.yml
+  - assetflow-alert-mongo-configmap.yml
+  - assetflow-alert-mongo-secret.yml
+  - assetflow-alert-mongo-initdb-configmap.yml
+  - assetflow-alert-mongo-deployment.yml
+  - assetflow-alert-mongo-service.yml
+
+  # Redis for Portfolio Service
+  - assetflow-portfolio-redis-configmap.yml
+  - assetflow-portfolio-redis-deployment.yml
+  - assetflow-portfolio-redis-service.yml
+
+  # Redis for Api Gateway Service
+  - assetflow-api-gateway-redis-configmap.yml
+  - assetflow-api-gateway-redis-deployment.yml
+  - assetflow-api-gateway-redis-service.yml
+
+  # Infrastructure Services (Deploy Second)
+  - assetflow-zookeeper-configmap.yml
+  - assetflow-zookeeper-deployment.yml
+  - assetflow-zookeeper-service.yml
+
+  - assetflow-kafka-configmap.yml
+  - assetflow-kafka-deployment.yml
+  - assetflow-kafka-service.yml
+
+  - assetflow-config-server-configmap.yml
+  - assetflow-config-server-secret.yml
+  - assetflow-config-server-deployment.yml
+  - assetflow-config-server-service.yml
+
+  - assetflow-api-gateway-configmap.yml
+  - assetflow-api-gateway-deployment.yml
+  - assetflow-api-gateway-service.yml
+
+  - assetflow-ingress.yml
+
+  # Microservices (Deploy Last)
+  - assetflow-user-service-configmap.yml
+  - assetflow-user-service-secret.yml
+  - assetflow-user-service-deployment.yml
+  - assetflow-user-service-service.yml
+
+  - assetflow-portfolio-service-configmap.yml
+  - assetflow-portfolio-service-secret.yml
+  - assetflow-portfolio-service-deployment.yml
+  - assetflow-portfolio-service-service.yml
+
+  - assetflow-market-data-service-configmap.yml
+  - assetflow-market-data-service-deployment.yml
+  - assetflow-market-data-service-service.yml
+
+  - assetflow-trade-service-configmap.yml
+  - assetflow-trade-service-secret.yml
+  - assetflow-trade-service-deployment.yml
+  - assetflow-trade-service-service.yml
+
+  - assetflow-alert-service-configmap.yml
+  - assetflow-alert-service-secret.yml
+  - assetflow-alert-service-deployment.yml
+  - assetflow-alert-service-service.yml

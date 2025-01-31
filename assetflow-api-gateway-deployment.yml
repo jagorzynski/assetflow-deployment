@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-api-gateway
+  labels:
+    app: assetflow-api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-api-gateway
+  template:
+    metadata:
+      labels:
+        app: assetflow-api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: ghcr.io/jagorzynski/assetflow-api-gateway:latest
+          ports:
+            - containerPort: 8086
+          envFrom:
+            - configMapRef:
+                name: assetflow-api-gateway-config

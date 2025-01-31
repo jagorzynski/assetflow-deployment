@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-trade-mongo-initdb-config
+  labels:
+    app: assetflow-trade-mongo
+data:
+  init-mongo-trades.js: |
+    db = db.getSiblingDB("trades");
+
+    db.createUser({
+        user: "sothrose",
+        pwd: "sothrose",
+        roles: [{ role: "readWrite", db: "trades" }]
+    });
+

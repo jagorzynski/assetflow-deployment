@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-api-gateway-redis-config
+data:
+  REDIS_HOST: "assetflow-api-gateway-redis"
+  REDIS_PORT: "6379"

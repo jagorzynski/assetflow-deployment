@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-kafka
+  labels:
+    app: assetflow-kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-kafka
+  template:
+    metadata:
+      labels:
+        app: assetflow-kafka
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:latest
+          ports:
+            - containerPort: 9092
+            - containerPort: 9093
+          envFrom:
+            - configMapRef:
+                name: assetflow-kafka-config
+      restartPolicy: Always

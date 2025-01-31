@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-trade-mongo-config
+  labels:
+    app: assetflow-trade-mongo
+data:
+  MONGO_INITDB_DATABASE: trades

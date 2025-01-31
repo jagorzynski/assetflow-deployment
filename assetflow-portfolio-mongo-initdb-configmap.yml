@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-portfolio-mongo-initdb-config
+  labels:
+    app: assetflow-portfolio-mongo
+data:
+  init-mongo-portfolios.js: |
+    db = db.getSiblingDB("portfolios");
+
+    db.createUser({
+        user: "sothrose",
+        pwd: "sothrose",
+        roles: [{ role: "readWrite", db: "portfolios" }]
+    });

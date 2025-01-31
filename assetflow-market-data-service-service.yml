@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: assetflow-market-data-service
+  labels:
+    app: assetflow-market-data-service
+spec:
+  selector:
+    app: assetflow-market-data-service
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+  type: ClusterIP

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assetflow-config-server-config
+  labels:
+    app: assetflow-config-server
+data:
+  SPRING_CLOUD_CONFIG_SERVER_GIT_URI: "https://github.com/jagorzynski/assetflow-config-repo"

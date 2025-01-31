@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetflow-trade-mongo
+  labels:
+    app: assetflow-trade-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assetflow-trade-mongo
+  template:
+    metadata:
+      labels:
+        app: assetflow-trade-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: assetflow-trade-mongo-config
+            - secretRef:
+                name: assetflow-trade-mongo-secret
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+            - name: mongo-init-script
+              mountPath: /docker-entrypoint-initdb.d/
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: assetflow-trade-mongo-pvc
+        - name: mongo-init-script
+          configMap:
+            name: assetflow-trade-mongo-initdb-config
